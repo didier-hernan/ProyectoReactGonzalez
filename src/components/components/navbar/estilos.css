@@ -1,0 +1,21 @@
+
+.navbar-brand {
+  font-size: 24px;
+  font-weight: bold;
+  color: #9c0505;
+}
+
+.nav-item {
+  margin-right: 15px;
+}
+
+.nav-link {
+  cursor: pointer;
+  text-decoration: none;
+  color: #000000;
+}
+
+.nav-link:hover {
+  color: #007bff;
+}
+
