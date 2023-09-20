@@ -21,14 +21,14 @@ export default function NavBar() {
             <Link to="/" className="nav-link">
               Todos
             </Link>
-            <Link to="/category/men's clothing" className="nav-link">
-              Clothing
+            <Link to="/category/Fender" className="nav-link">
+              Fender
             </Link>
-            <Link to="/category/jewelery" className="nav-link">
-              Jewelery
+            <Link to="/category/Gibson" className="nav-link">
+              Gibson
             </Link>
-            <Link to="/category/electronics" className="nav-link">
-              Electronics
+            <Link to="/category/Ibanez" className="nav-link">
+              Ibanez
             </Link>
           </Nav>
           <CartWidget />

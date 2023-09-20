@@ -1,70 +1,80 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./ItemStyle.css";
-import { useParams, useLocation, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import Cart from "../cart/Cart";
+import { collection, query, getDocs, where } from "firebase/firestore";
+import { db } from "../../firebase/clients";
 
 function ItemListContainer() {
-  const { categoryName } = useParams();
+  const { categoryId } = useParams();
   const location = useLocation();
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const navigate = useNavigate();
 
-  // Función para agregar un producto al carrito
   const addToCart = (selectedProduct) => {
     setCart([...cart, selectedProduct]);
   };
 
   useEffect(() => {
-    document.title = `Productos - ${categoryName || "Todos los productos"}`;
+    document.title = `Productos - ${categoryId || "Todos los productos"}`;
 
-    const apiUrl = categoryName
-      ? `https://fakestoreapi.com/products/category/${categoryName}`
-      : "https://fakestoreapi.com/products?limit=10";
+    const fetchData = async () => {
+      try {
+        const productCollection = collection(db, "products");
+        let q = query(productCollection);
 
-    fetch(apiUrl)
-      .then((res) => res.json())
-      .then((data) => {
-        setProducts(data);
+        // Si se proporciona una categoría en la URL, filtrar por categoría
+        if (categoryId) {
+          const categoryFilter = where("category", "==", categoryId);
+          q = query(productCollection, categoryFilter);
+        }
+
+        const querySnapshot = await getDocs(q);
+        const productsData = [];
+
+        querySnapshot.forEach((doc) => {
+          productsData.push({ id: doc.id, ...doc.data() });
+        });
+
+        setProducts(productsData);
         setCargando(false);
-      })
-      .catch((e) => console.error(e));
-  }, [categoryName, location.pathname]);
+      } catch (error) {
+        console.error("Error al obtener los productos:", error);
+        setCargando(false); // Agrega esta línea para manejar el error y evitar mostrar "Producto no encontrado"
+      }
+    };
+
+    fetchData();
+  }, [categoryId, location.pathname]);
 
   return (
     <div>
       <h1>Lista de Productos</h1>
       {cargando ? (
         <p>Cargando...</p>
+      ) : products.length === 0 ? (
+        <p>No se encontraron productos</p>
       ) : (
         <div>
           <div className="product-container">
             {products.map((product) => (
               <div key={product.id} className="card">
-                <img
-                  className="product-image"
-                  src={product.image}
-                  alt={product.title}
-                />
-                <div className="card-info">
-                  <h2>{product.title}</h2>
-                  <p>{product.description}</p>
-                  <Link to={`/item/${product.id}`} className="btn-ver">
-                    VER
-                  </Link>
-                  <button
-                    onClick={() => addToCart(product)}
-                    className="btn-agregar-carrito"
-                  >
-                    Agregar al carrito
-                  </button>
-                </div>
+                <h2>{product.title}</h2>
+                <img src={product.img} alt={product.title} />
+                <p>Categoría: {product.category}</p>
+                <p>Descripción: {product.description}</p>
+                <p>Precio: ${product.price}</p>
+                <p>Stock: {product.stock}</p>
+                <Link to={`/item/${product.id}`} className="btn-ver">
+                  VER
+                </Link>
               </div>
             ))}
           </div>
         </div>
       )}
-      <Cart cartItems={cart} />
     </div>
   );
 }

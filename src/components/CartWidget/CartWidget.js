@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import carrito from "./carrito.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cart from "../cart/Cart";
-import ItemCount from "../itemDetail/ItemCount";
+import ItemCount from "../itemlist/ItemCount";
 import "./CartWidget.css";
 
 const CartWidget = () => {

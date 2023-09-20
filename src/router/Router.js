@@ -1,7 +1,8 @@
-import NavBar from "../components/navbar/NavBar";
-import ItemListContainer from "../components/ItemListConteiner/ItemListConteiner.js";
-import ItemDetailContainer from "../components/itemDetail/ItemDetailContainer";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import NavBar from "../components/navbar/NavBar";
+import ItemListContainer from "../components/ItemListConteiner/ItemListConteiner";
+import ItemDetailContainer from "../components/itemdetailconteiner/ItemDetailContainer";
 
 export default function Router() {
   return (
@@ -10,7 +11,7 @@ export default function Router() {
       <Routes>
         <Route path="/" element={<ItemListContainer />} />
         <Route path="/item/:itemid" element={<ItemDetailContainer />} />
-        <Route path="/category/:categoryName" element={<ItemListContainer />} />
+        <Route path="/category/:categoryId" element={<ItemListContainer />} />
       </Routes>
     </BrowserRouter>
   );
