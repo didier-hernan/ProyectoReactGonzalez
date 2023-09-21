@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from "../cart/CartContext"; // Importa el contexto del carrito
 import carrito from "./carrito.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cart from "../cart/Cart";
@@ -7,7 +8,8 @@ import ItemCount from "../itemlist/ItemCount";
 import "./CartWidget.css";
 
 const CartWidget = () => {
-  const [cartItems, setCartItems] = useState([]); // Estado para rastrear los elementos del carrito
+  const { cartItems } = useCart(); // Usa el contexto del carrito
+
   const [cartItemCount, setCartItemCount] = useState(1);
 
   // Función para agregar productos al carrito y actualizar cartItems

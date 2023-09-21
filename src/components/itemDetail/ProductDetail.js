@@ -8,7 +8,7 @@ function ProductDetail() {
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const getProduct = async () => {
       try {
         const productRef = doc(db, "products", productId);
         const productSnapshot = await getDoc(productRef);
@@ -16,14 +16,14 @@ function ProductDetail() {
         if (productSnapshot.exists()) {
           setProduct({ id: productSnapshot.id, ...productSnapshot.data() });
         } else {
-          console.error("Producto no encontrado");
+          console.error("Producto no encontrado en Firebase");
         }
       } catch (error) {
-        console.error("Error al obtener el producto:", error);
+        console.error("Error al obtener el producto desde Firebase:", error);
       }
     };
 
-    fetchData();
+    getProduct();
   }, [productId]);
 
   if (!product) {
@@ -37,7 +37,7 @@ function ProductDetail() {
       <p>Categoría: {product.category}</p>
       <p>Descripción: {product.description}</p>
       <p>Precio: ${product.price}</p>
-      <p>Stock: {product.stock}</p>
+      {/* Agrega cualquier otra información que desees mostrar */}
     </div>
   );
 }

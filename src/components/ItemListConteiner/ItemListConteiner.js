@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./ItemStyle.css";
-import { useParams, useLocation, Link } from "react-router-dom";
 import Cart from "../cart/Cart";
 import { collection, query, getDocs, where } from "firebase/firestore";
 import { db } from "../../firebase/clients";
 
 function ItemListContainer() {
   const { categoryId } = useParams();
-  const location = useLocation();
   const [products, setProducts] = useState([]);
-  const [cart, setCart] = useState([]);
   const [cargando, setCargando] = useState(true);
+  const navigate = useNavigate(); // Función de navegación de React Router
 
   useEffect(() => {
     document.title = `Productos - ${categoryId || "Todos los productos"}`;
@@ -42,7 +41,7 @@ function ItemListContainer() {
     };
 
     fetchData();
-  }, [categoryId, location.pathname]);
+  }, [categoryId]);
 
   // Agregar estado para rastrear el producto seleccionado
   const [selectedProduct, setSelectedProduct] = useState(null);
@@ -50,6 +49,7 @@ function ItemListContainer() {
   // Función para manejar la selección de un producto
   const handleProductClick = (product) => {
     setSelectedProduct(product);
+    navigate(`/detalle/${product.id}`); // Redirigir al detalle del producto
   };
 
   // Renderizar toda la información del producto seleccionado

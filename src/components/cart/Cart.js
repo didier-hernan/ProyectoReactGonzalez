@@ -3,19 +3,15 @@ import React from "react";
 function Cart({ cartItems }) {
   return (
     <div>
-      {cartItems.length === 0 ? (
-        <div>
-          <p>No hay elementos en el carrito.</p>
-        </div>
-      ) : (
-        <div>
-          {cartItems.map((item) => (
-            <div key={item.id}>
-              <h3>{item.title}</h3>
-            </div>
-          ))}
-        </div>
-      )}
+      <h3>Carrito de Compras</h3>
+      <ul>
+        {cartItems.map((item) => (
+          <li key={item.id}>
+            {/* Renderizar información del elemento del carrito */}
+            {item.name} - Cantidad: {item.quantity}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
