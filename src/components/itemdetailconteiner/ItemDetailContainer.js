@@ -1,38 +1,35 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { doc, getDoc } from "firebase/firestore"; // Importa las funciones necesarias de Firebase
-import { db } from "../../firebase/clients"; // Importa la configuración de tu base de datos
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "../../firebase/clients";
 
 function ItemDetailContainer() {
-  const { itemid } = useParams(); // Obtén el itemid de la URL
+  const { itemid } = useParams();
   const [product, setProduct] = useState(null);
 
   useEffect(() => {
-    // Función asincrónica para obtener el producto desde Firebase
     const getProduct = async () => {
       try {
-        const productRef = doc(db, "products", itemid); // Referencia al documento del producto en Firebase
-        const productSnapshot = await getDoc(productRef); // Obtiene el documento del producto
+        const productRef = doc(db, "products", itemid);
+        const productSnapshot = await getDoc(productRef);
 
         if (productSnapshot.exists()) {
-          // Si el producto existe en Firebase, actualiza el estado con los datos del producto
           setProduct({ id: productSnapshot.id, ...productSnapshot.data() });
         } else {
           console.error("Producto no encontrado en Firebase");
         }
       } catch (error) {
-        console.error("Error al obtener el producto desde Firebase:");
+        console.error("Error al obtener el producto desde Firebase:", error);
       }
     };
 
-    getProduct(); // Llama a la función para obtener el producto
+    getProduct();
   }, [itemid]);
 
   if (!product) {
-    return;
+    return <div>Cargando...</div>;
   }
 
-  // Si product está definido, muestra la información relevante
   return (
     <div>
       <h2>{product.title}</h2>

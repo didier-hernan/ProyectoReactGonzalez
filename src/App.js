@@ -2,50 +2,32 @@ import React, { useEffect, useState } from "react";
 import Router from "./router/Router";
 import { db } from "./firebase/clients";
 import ItemDetailContainer from "./components/itemdetailconteiner/ItemDetailContainer";
-import product from "./components/itemdetailconteiner/ItemDetailContainer";
-// collection es una funcion de firestore
-import {
-  getDocs,
-  collection,
-  query,
-  where,
-  limit,
-  getDoc,
-  doc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 function App() {
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  useEffect(() => {
-    // Traer toda la data de una coleccion de firebase:
+  const getProducts = async () => {
     const productsRef = collection(db, "products");
+    const data = await getDocs(productsRef);
+    const dataFiltrada = data.docs.map((doc) => ({
+      ...doc.data(),
+      id: doc.id,
+    }));
 
-    const getProducts = async () => {
-      try {
-        const data = await getDocs(productsRef);
-        if (data) {
-          const dataFiltrada = data.docs.map((doc) => ({
-            ...doc.data(),
-            id: doc.id,
-          }));
+    console.log(dataFiltrada);
+  };
 
-          if (dataFiltrada && dataFiltrada.length > 0) {
-            setSelectedProduct(dataFiltrada[0]);
-          }
-        }
-      } catch (error) {
-        console.error("Error al obtener los productos:", error);
-      }
-    };
-
+  useEffect(() => {
     getProducts();
   }, []);
+
   return (
-    <div>
-      <Router />
-      {/* Pasa el producto seleccionado a ItemDetailContainer */}
-      {selectedProduct && <ItemDetailContainer product={selectedProduct} />}
+    <div className="App">
+      <header className="App-header">
+        <Router />
+        {selectedProduct && <ItemDetailContainer product={selectedProduct} />}
+      </header>
     </div>
   );
 }
