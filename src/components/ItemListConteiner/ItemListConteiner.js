@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./ItemStyle.css";
-import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
+import { useParams, useLocation, Link } from "react-router-dom";
 import Cart from "../cart/Cart";
 import { collection, query, getDocs, where } from "firebase/firestore";
 import { db } from "../../firebase/clients";
@@ -11,11 +11,6 @@ function ItemListContainer() {
   const [products, setProducts] = useState([]);
   const [cart, setCart] = useState([]);
   const [cargando, setCargando] = useState(true);
-  const navigate = useNavigate();
-
-  const addToCart = (selectedProduct) => {
-    setCart([...cart, selectedProduct]);
-  };
 
   useEffect(() => {
     document.title = `Productos - ${categoryId || "Todos los productos"}`;
@@ -49,6 +44,31 @@ function ItemListContainer() {
     fetchData();
   }, [categoryId, location.pathname]);
 
+  // Agregar estado para rastrear el producto seleccionado
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  // Función para manejar la selección de un producto
+  const handleProductClick = (product) => {
+    setSelectedProduct(product);
+  };
+
+  // Renderizar toda la información del producto seleccionado
+  const renderSelectedProduct = () => {
+    if (selectedProduct) {
+      return (
+        <div>
+          <h2>{selectedProduct.title}</h2>
+          <img src={selectedProduct.img} alt={selectedProduct.title} />
+          <p>Categoría: {selectedProduct.category}</p>
+          <p>Descripción: {selectedProduct.description}</p>
+          <p>Precio: ${selectedProduct.price}</p>
+          <p>Stock: {selectedProduct.stock}</p>
+        </div>
+      );
+    }
+    return null;
+  };
+
   return (
     <div>
       <h1>Lista de Productos</h1>
@@ -60,19 +80,17 @@ function ItemListContainer() {
         <div>
           <div className="product-container">
             {products.map((product) => (
-              <div key={product.id} className="card">
+              <div
+                key={product.id}
+                className="card"
+                onClick={() => handleProductClick(product)} // Manejar clic en la tarjeta
+              >
                 <h2>{product.title}</h2>
                 <img src={product.img} alt={product.title} />
-                <p>Categoría: {product.category}</p>
-                <p>Descripción: {product.description}</p>
-                <p>Precio: ${product.price}</p>
-                <p>Stock: {product.stock}</p>
-                <Link to={`/item/${product.id}`} className="btn-ver">
-                  VER
-                </Link>
               </div>
             ))}
           </div>
+          {renderSelectedProduct()} {/* Mostrar el producto seleccionado */}
         </div>
       )}
     </div>

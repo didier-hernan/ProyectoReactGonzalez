@@ -1,3 +1,5 @@
+import React from "react";
+
 function ShoppingCart({ cart }) {
   return (
     <div>
@@ -10,3 +12,5 @@ function ShoppingCart({ cart }) {
     </div>
   );
 }
+
+export default ShoppingCart;
