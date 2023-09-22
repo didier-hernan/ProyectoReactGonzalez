@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { doc, getDoc } from "firebase/firestore";
 import { db } from "../../firebase/clients";
+import { useCart } from "../cart/CartContext"; // Asegúrate de poner la ruta correcta
 
 function ProductDetail() {
   const { productId } = useParams();
   const [product, setProduct] = useState(null);
+  const { addToCart } = useCart(); // Obtén la función addToCart del contexto del carrito
 
   useEffect(() => {
     const getProduct = async () => {
@@ -26,6 +28,12 @@ function ProductDetail() {
     getProduct();
   }, [productId]);
 
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart(product);
+    }
+  };
+
   if (!product) {
     return <div>Cargando...</div>;
   }
@@ -37,7 +45,7 @@ function ProductDetail() {
       <p>Categoría: {product.category}</p>
       <p>Descripción: {product.description}</p>
       <p>Precio: ${product.price}</p>
-      {/* Agrega cualquier otra información que desees mostrar */}
+      <button onClick={handleAddToCart}>Agregar al Carrito</button>
     </div>
   );
 }
