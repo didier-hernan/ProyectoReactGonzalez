@@ -1,9 +1,11 @@
+//Cart.js
+
 import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./CartContext";
 
 function Cart() {
-  const { cartItems, addToCart, removeFromCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, createOrder } = useCart();
 
   // Calcula el total de la compra teniendo en cuenta la cantidad de cada producto
   const calculateTotal = () => {
@@ -41,6 +43,8 @@ function Cart() {
         ))}
       </ul>
       <div>Total de la Compra: ${calculateTotal().toFixed(2)}</div>
+      <button onClick={createOrder}>Terminar Compra</button>{" "}
+      {/* Agrega el botón para finalizar la compra */}
       <Link to="/">Seguir comprando</Link>
     </div>
   );
