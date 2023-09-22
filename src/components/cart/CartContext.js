@@ -10,14 +10,27 @@ export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = (product) => {
-    // Agregar lógica para agregar productos al carrito aquí
-    setCartItems([...cartItems, product]);
+    // Verificar si el producto ya está en el carrito
+    const existingItem = cartItems.find((item) => item.id === product.id);
+
+    if (existingItem) {
+      // Si el producto ya está en el carrito, actualizar su cantidad
+      setCartItems(
+        cartItems.map((item) =>
+          item.id === product.id
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        )
+      );
+    } else {
+      // Si el producto no está en el carrito, agregarlo con cantidad 1
+      setCartItems([...cartItems, { ...product, quantity: 1 }]);
+    }
   };
 
   const removeFromCart = (productId) => {
-    // Agregar lógica para eliminar productos del carrito aquí
-    const updatedCart = cartItems.filter((item) => item.id !== productId);
-    setCartItems(updatedCart);
+    // Eliminar el producto del carrito
+    setCartItems(cartItems.filter((item) => item.id !== productId));
   };
 
   return (

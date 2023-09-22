@@ -4,7 +4,7 @@ import { useCart } from "../cart/CartContext"; // Importa el contexto del carrit
 import carrito from "./carrito.png";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Cart from "../cart/Cart";
-import ItemCount from "../itemlist/ItemCount";
+import CartContext from "../cart/CartContext";
 import "./CartWidget.css";
 
 const CartWidget = () => {
@@ -28,12 +28,6 @@ const CartWidget = () => {
         <img src={carrito} alt="Icono del carrito" className="cart-icon" />
       </Link>
       <Cart cartItems={cartItems} />
-      <ItemCount
-        initial={cartItemCount}
-        onAdd={handleAddToCart}
-        cartItemCount={cartItemCount}
-      />
-      <p className="cart-count">Número total en el carrito: {cartItemCount}</p>
     </div>
   );
 };

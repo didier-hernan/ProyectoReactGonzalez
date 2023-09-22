@@ -1,46 +1,46 @@
-import { useState, useEffect } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./CartContext";
 
 function Cart() {
-  const { cartItems } = useCart();
+  const { cartItems, addToCart, removeFromCart } = useCart();
 
-  // Crear un objeto para rastrear la cantidad de cada producto en el carrito
-  const productQuantities = {};
+  // Calcula el total de la compra teniendo en cuenta la cantidad de cada producto
+  const calculateTotal = () => {
+    let total = 0;
 
-  // Llenar el objeto productQuantities con las cantidades actuales
-  cartItems.forEach((item) => {
-    if (productQuantities[item.id]) {
-      productQuantities[item.id]++;
-    } else {
-      productQuantities[item.id] = 1;
-    }
-  });
+    cartItems.forEach((item) => {
+      total += item.price * item.quantity;
+    });
 
-  // Calcula el total de la compra correctamente, incluso para productos idénticos
-  const total = cartItems.reduce((acc, item) => {
-    return acc + item.price;
-  }, 0);
+    return total;
+  };
 
   return (
     <div>
       <h3>Carrito de Compras</h3>
       <ul>
-        {Object.keys(productQuantities).map((productId) => {
-          const item = cartItems.find((item) => item.id === productId);
-          return (
-            <li key={productId}>
-              <div>
-                <h4>{item.title}</h4>
-                <p>Precio: ${item.price}</p>
-                <p>Stock: {item.stock}</p>
-              </div>
-              <div>Cantidad: {productQuantities[productId]}</div>
-            </li>
-          );
-        })}
+        {cartItems.map((item) => (
+          <li key={item.id}>
+            <div>
+              <h4>{item.title}</h4>
+              <p>Precio: ${item.price}</p>
+              <p>Stock: {item.stock}</p>
+              <div>Cantidad: {item.quantity}</div>
+              {/* Considera agregar botones para aumentar y disminuir la cantidad */}
+              <button
+                onClick={() =>
+                  addToCart({ ...item, quantity: item.quantity + 1 })
+                }
+              >
+                +
+              </button>
+              <button onClick={() => removeFromCart(item.id)}>-</button>
+            </div>
+          </li>
+        ))}
       </ul>
-      <div>Total de la Compra: ${total.toFixed(2)}</div>
+      <div>Total de la Compra: ${calculateTotal().toFixed(2)}</div>
       <Link to="/">Seguir comprando</Link>
     </div>
   );
