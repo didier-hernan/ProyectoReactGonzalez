@@ -1,12 +1,14 @@
 // Cart.js
+
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useCart } from "./CartContext";
 import Brieft from "../brief/brieft"; // Importa el componente Brieft
 
 function Cart() {
   const { cartItems, addToCart, removeFromCart, setCartItems } = useCart();
   const [showForm, setShowForm] = useState(false); // Estado para mostrar/ocultar el formulario
+  const navigate = useNavigate();
 
   const handlePurchase = (name, phone, email) => {
     if (cartItems.length === 0) {
@@ -42,11 +44,20 @@ function Cart() {
       }
     }
   };
+
+  const handleCheckout = () => {
+    // Redirige a la vista de Checkout
+    navigate("/checkout");
+  };
+
   return (
     <div>
       <h3>Carrito de Compras</h3>
       {showForm ? (
-        <div></div>
+        <div>
+          {/* Aquí va tu formulario */}
+          <Brieft onPurchase={handlePurchase} />
+        </div>
       ) : (
         <ul>
           {cartItems.map((item) => (
@@ -56,7 +67,6 @@ function Cart() {
                 <p>Precio: ${item.price}</p>
                 <p>Stock: {item.stock}</p>
                 <div>Cantidad: {item.quantity}</div>
-                {/* Considera agregar botones para aumentar y disminuir la cantidad */}
                 <button
                   onClick={() =>
                     addToCart({ ...item, quantity: item.quantity + 1 })
@@ -73,16 +83,21 @@ function Cart() {
         </ul>
       )}
       <div>Total de la Compra: ${calculateTotal().toFixed(2)}</div>
-      {showForm ? (
-        <Brieft onPurchase={handlePurchase} />
-      ) : (
-        <button onClick={handlePurchase}>Terminar Compra</button>
-      )}
-      {/* Si no hay productos en el carrito, muestra el mensaje de error */}
       {cartItems.length === 0 && (
         <p style={{ color: "red" }}>
           No puedes comprar sin productos en el carrito.
         </p>
+      )}
+      {showForm ? (
+        <div>
+          {/* Botón Checkout debajo del formulario */}
+          <button onClick={handleCheckout}>Checkout</button>
+        </div>
+      ) : (
+        <div>
+          {/* Botón Terminar Compra cuando el formulario no está visible */}
+          <button onClick={handlePurchase}>Terminar Compra</button>
+        </div>
       )}
       <Link to="/">Seguir comprando</Link>
     </div>

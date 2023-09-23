@@ -5,6 +5,7 @@ import ItemListContainer from "../components/ItemListConteiner/ItemListConteiner
 import ItemDetailContainer from "../components/itemdetailconteiner/ItemDetailContainer";
 import ShoppingCartPage from "../components/cart/ShoppingCartPage";
 import ProductDetail from "../components/itemDetail/ProductDetail";
+import Checkout from "../components/cart/Checkout";
 import { CartProvider } from "../components/cart/CartContext";
 export default function Router() {
   return (
@@ -17,6 +18,7 @@ export default function Router() {
           <Route path="/category/:categoryId" element={<ItemListContainer />} />
           <Route path="/carrito" element={<ShoppingCartPage />} />
           <Route path="/detalle/:productId" element={<ProductDetail />} />
+          <Route path="/checkout" element={<Checkout />} />
         </Routes>
       </BrowserRouter>
     </CartProvider>

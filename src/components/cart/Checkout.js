@@ -1,28 +1,20 @@
-import React from "react";
+// Checkout.js
 
-function Checkout({ purchasedData, cartItems, orderNumber, totalPrice }) {
+import React from "react";
+import { useParams } from "react-router-dom";
+
+function Checkout() {
+  const { orderNumber } = useParams(); // Obtén el número de orden de la URL
+
+  // Aquí puedes acceder a los productos y otros datos relacionados con la compra
+  // Usando los datos que recibiste desde la URL
+
   return (
     <div>
-      <h3>Checkout</h3>
-      <p>Orden número: {orderNumber}</p>
-      {/* Comprobación de purchasedData antes de acceder a sus propiedades */}
-      {purchasedData && (
-        <div>
-          <p>Nombre: {purchasedData.name}</p>
-          <p>Teléfono: {purchasedData.phone}</p>
-          <p>Email: {purchasedData.email}</p>
-        </div>
-      )}
-      <h4>Productos Comprados:</h4>
-      <ul>
-        {Array.isArray(cartItems) &&
-          cartItems.map((item) => (
-            <li key={item.id}>
-              {item.title} - Cantidad: {item.quantity}
-            </li>
-          ))}
-      </ul>
-      <p>Precio Total: {totalPrice ? `$${totalPrice.toFixed(2)}` : "N/A"}</p>
+      <h2>Detalles de la Compra</h2>
+      {/* Muestra los detalles de la compra aquí */}
+      <p>Número de Orden: {orderNumber}</p>
+      {/* Muestra otros detalles de la compra */}
     </div>
   );
 }
