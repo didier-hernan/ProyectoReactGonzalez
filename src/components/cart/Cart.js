@@ -6,7 +6,7 @@ import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/clients";
 
 function Cart() {
-  const { cartItems, addToCart, removeFromCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, setCartItems } = useCart();
   const [showForm, setShowForm] = useState(false);
   const navigate = useNavigate();
 
@@ -27,16 +27,25 @@ function Cart() {
   };
 
   const handleDecreaseQuantity = (productId) => {
-    const productInCart = cartItems.find((item) => item.id === productId);
+    const updatedCart = [...cartItems];
+    const productInCart = updatedCart.find((item) => item.id === productId);
+
     if (productInCart) {
       if (productInCart.quantity > 1) {
         productInCart.quantity -= 1;
-      } else {
+        // Actualiza el carrito después de disminuir la cantidad
         removeFromCart(productId);
+        addToCart(productInCart);
+      } else {
+        // Si la cantidad es 1, no lo elimines
+        productInCart.quantity = 1;
+        // Actualiza el carrito
+        setCartItems([...cartItems]);
       }
+      // Actualizamos el carrito con el producto modificado
+      setCartItems(updatedCart);
     }
   };
-
   const createOrder = async () => {
     const order = {
       buyer: {
