@@ -1,10 +1,11 @@
+// Cart.js
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "./CartContext";
 import Brieft from "../brief/brieft"; // Importa el componente Brieft
 
 function Cart() {
-  const { cartItems, addToCart, removeFromCart } = useCart();
+  const { cartItems, addToCart, removeFromCart, setCartItems } = useCart();
   const [showForm, setShowForm] = useState(false); // Estado para mostrar/ocultar el formulario
 
   const handlePurchase = (name, phone, email) => {
@@ -26,7 +27,21 @@ function Cart() {
 
     return total;
   };
+  const handleDecreaseQuantity = (productId) => {
+    // Encuentra el producto en el carrito
+    const productInCart = cartItems.find((item) => item.id === productId);
 
+    if (productInCart) {
+      if (productInCart.quantity > 1) {
+        // Si la cantidad es mayor que 1, reduce la cantidad en 1
+        productInCart.quantity -= 1;
+        setCartItems([...cartItems]); // Actualiza el carrito
+      } else {
+        // Si la cantidad es 1, elimina el producto del carrito
+        removeFromCart(productId);
+      }
+    }
+  };
   return (
     <div>
       <h3>Carrito de Compras</h3>
@@ -49,7 +64,9 @@ function Cart() {
                 >
                   +
                 </button>
-                <button onClick={() => removeFromCart(item.id)}>-</button>
+                <button onClick={() => handleDecreaseQuantity(item.id)}>
+                  -
+                </button>
               </div>
             </li>
           ))}
@@ -73,4 +90,3 @@ function Cart() {
 }
 
 export default Cart;
-//import Brieft from "../brief/brieft"

@@ -1,4 +1,4 @@
-//CartContext.js
+// CartContext.js
 import React, { createContext, useContext, useState } from "react";
 import { collection, addDoc } from "firebase/firestore";
 import { db } from "../../firebase/clients";
@@ -69,7 +69,13 @@ export function CartProvider({ children }) {
 
   return (
     <CartContext.Provider
-      value={{ cartItems, addToCart, removeFromCart, createOrder }}
+      value={{
+        cartItems,
+        addToCart,
+        removeFromCart,
+        createOrder,
+        setCartItems,
+      }}
     >
       {children}
     </CartContext.Provider>

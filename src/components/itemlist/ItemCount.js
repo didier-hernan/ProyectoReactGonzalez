@@ -9,7 +9,8 @@ function ItemCount({ initial, onAdd, cartItemCount }) {
   };
 
   const handleDecrement = () => {
-    if (count > 1) {
+    if (count > 0) {
+      // Verifica que la cantidad sea mayor que 0 antes de decrementar
       setCount(count - 1);
       onAdd(-1);
     }
