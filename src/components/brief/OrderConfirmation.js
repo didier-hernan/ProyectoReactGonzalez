@@ -1,4 +1,3 @@
-// OrderConfirmation.js
 import React from "react";
 
 function OrderConfirmation({ purchasedData, cartItems }) {
