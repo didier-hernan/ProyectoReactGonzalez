@@ -1,5 +1,3 @@
-//CheckoutForm.js:
-
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -17,9 +15,10 @@ function CheckoutForm() {
     if (!name || !phone || !email) {
       setFormError("Rellene todos los campos");
     } else {
-      setCompleted(true);
-      setFormError("");
-      navigate(`/checkout/${orderNumber}/success`);
+      // Redirige a la página de éxito con los datos de compra y número de orden en la URL
+      navigate(
+        `/checkout/${orderNumber}/success?name=${name}&phone=${phone}&email=${email}&orderNumber=${orderNumber}`
+      );
     }
   };
 
