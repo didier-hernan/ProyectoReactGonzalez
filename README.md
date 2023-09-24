@@ -1,6 +1,6 @@
 # Proyecto React Gonzalez
 
-Segunda Entraga React JS
+Entraga Final React JS
 
 Didier Hernan Gonzalez
 
@@ -29,5 +29,9 @@ Historial de Pedidos
 
 Para que siempre estés al tanto de tus compras anteriores, mantenemos un historial de pedidos que puedes consultar en cualquier momento desde la página de inicio. Es una forma conveniente de hacer un seguimiento de tu colección de guitarras.
 estoy listo para seguir mejorando y espero que con su correccion pueda mejorar mi proyecto.
+
+si bien el proyecto esta faltante de diseño y varias cosas que no hice a tiempo de solucionar, pero dedique mucho tiempo al proyecto y lo entrego hoy pero voy a seguir trabajando en el, hay componentes que no respentan lo solicitado ya que lo termine en el ultimo momento creyendo que me llevaria menos tiempo y cuando quise pasarlos a sus respectivas carpetas se empezo a romper el codigo.
+
+gracias por la dedicacion del curso y estaremos en contacto
 
 muchas gracias

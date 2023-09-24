@@ -12,7 +12,6 @@ function ItemDetailContainer() {
       try {
         const productRef = doc(db, "products", itemid);
         const productSnapshot = await getDoc(productRef);
-
         if (productSnapshot.exists()) {
           setProduct({ id: productSnapshot.id, ...productSnapshot.data() });
         } else {
@@ -25,7 +24,6 @@ function ItemDetailContainer() {
 
     getProduct();
   }, [itemid]);
-
   if (!product) {
     return <div>Cargando...</div>;
   }

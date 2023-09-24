@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
+import "./CheckoutForm.css";
 
 function CheckoutForm() {
   const { orderNumber } = useParams();
@@ -15,7 +16,6 @@ function CheckoutForm() {
     if (!name || !phone || !email) {
       setFormError("Rellene todos los campos");
     } else {
-      // Redirige a la página de éxito con los datos de compra y número de orden en la URL
       navigate(
         `/checkout/${orderNumber}/success?name=${name}&phone=${phone}&email=${email}&orderNumber=${orderNumber}`
       );
@@ -23,37 +23,46 @@ function CheckoutForm() {
   };
 
   return (
-    <div>
+    <div className="checkout-form-container">
       {!completed ? (
         <div>
-          <h3>Finalizar Compra</h3>
+          <h3 className="checkout-form-heading">Finalizar Compra</h3>
           <form>
             <label>Nombre:</label>
             <input
               type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              className="checkout-input"
             />
             <label>Teléfono:</label>
             <input
               type="text"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
+              className="checkout-input"
             />
             <label>Email:</label>
             <input
               type="text"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              className="checkout-input"
             />
-            {formError && <p style={{ color: "red" }}>{formError}</p>}
-            <button onClick={handleSubmit} disabled={!name || !phone || !email}>
+            {formError && <p className="error-message">{formError}</p>}
+            <button
+              onClick={handleSubmit}
+              disabled={!name || !phone || !email}
+              className="checkout-button"
+            >
               Finalizar Compra
             </button>
           </form>
         </div>
       ) : (
-        <p>Compra realizada. Gracias por tu compra.</p>
+        <p className="checkout-success-message">
+          Compra realizada. Gracias por tu compra.
+        </p>
       )}
     </div>
   );

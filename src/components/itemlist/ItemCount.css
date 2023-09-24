@@ -1,32 +1,31 @@
-/* Estilos para ItemCount */
 .item-count {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .item-buttons {
-    display: flex;
-    align-items: center;
-    margin-bottom: 10px;
-  }
-  
-  .item-buttons button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 0 5px;
-  }
-  
-  .item-count span {
-    font-size: 24px;
-    font-weight: bold;
-    margin: 0 10px;
-  }
-  
-  .add-to-cart-button {
-    background-color: #ff6600;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-buttons {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.item-buttons button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin: 0 5px;
+}
+
+.item-count span {
+  font-size: 24px;
+  font-weight: bold;
+  margin: 0 10px;
+}
+
+.add-to-cart-button {
+  background-color: #ff6600;
+}

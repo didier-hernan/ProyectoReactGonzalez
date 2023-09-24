@@ -13,7 +13,6 @@ function ItemDetail() {
       try {
         const productRef = doc(db, "products", itemid);
         const productSnapshot = await getDoc(productRef);
-
         if (productSnapshot.exists()) {
           setProduct({ id: productSnapshot.id, ...productSnapshot.data() });
         } else {
@@ -23,7 +22,6 @@ function ItemDetail() {
         console.error("Error al obtener el producto:", error);
       }
     };
-
     fetchData();
   }, [itemid]);
 

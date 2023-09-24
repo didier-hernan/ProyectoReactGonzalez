@@ -9,12 +9,11 @@ import CartWidget from "../CartWidget/CartWidget";
 
 export default function NavBar() {
   return (
-    <Navbar bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" expand="lg" className="navbar">
       <Container>
         <Link to="/" className="navbar-brand">
           Tienda On-line
         </Link>
-
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="ml-auto">

@@ -8,56 +8,50 @@ function ItemListContainer() {
   const { categoryId } = useParams();
   const [products, setProducts] = useState([]);
   const [cargando, setCargando] = useState(true);
-  const navigate = useNavigate(); // Función de navegación de React Router
+  const navigate = useNavigate();
 
   useEffect(() => {
     document.title = `Productos - ${categoryId || "Todos los productos"}`;
-
     const fetchData = async () => {
       try {
         const productCollection = collection(db, "products");
         let q = query(productCollection);
-
-        // Si se proporciona una categoría en la URL, filtrar por categoría
         if (categoryId) {
           const categoryFilter = where("category", "==", categoryId);
           q = query(productCollection, categoryFilter);
         }
-
         const querySnapshot = await getDocs(q);
         const productsData = [];
-
         querySnapshot.forEach((doc) => {
           productsData.push({ id: doc.id, ...doc.data() });
         });
-
         setProducts(productsData);
         setCargando(false);
       } catch (error) {
         console.error("Error al obtener los productos:", error);
-        setCargando(false); // Agrega esta línea para manejar el error y evitar mostrar "Producto no encontrado"
+        setCargando(false);
       }
     };
-
     fetchData();
   }, [categoryId]);
 
-  // Agregar estado para rastrear el producto seleccionado
   const [selectedProduct, setSelectedProduct] = useState(null);
 
-  // Función para manejar la selección de un producto
   const handleProductClick = (product) => {
     setSelectedProduct(product);
-    navigate(`/detalle/${product.id}`); // Redirigir al detalle del producto
+    navigate(`/detalle/${product.id}`);
   };
 
-  // Renderizar toda la información del producto seleccionado
   const renderSelectedProduct = () => {
     if (selectedProduct) {
       return (
         <div>
           <h2>{selectedProduct.title}</h2>
-          <img src={selectedProduct.img} alt={selectedProduct.title} />
+          <img
+            className="product-image"
+            src={selectedProduct.img}
+            alt={selectedProduct.title}
+          />
           <p>Categoría: {selectedProduct.category}</p>
           <p>Descripción: {selectedProduct.description}</p>
           <p>Precio: ${selectedProduct.price}</p>
@@ -82,14 +76,14 @@ function ItemListContainer() {
               <div
                 key={product.id}
                 className="card"
-                onClick={() => handleProductClick(product)} // Manejar clic en la tarjeta
+                onClick={() => handleProductClick(product)}
               >
                 <h2>{product.title}</h2>
                 <img src={product.img} alt={product.title} />
               </div>
             ))}
           </div>
-          {renderSelectedProduct()} {/* Mostrar el producto seleccionado */}
+          {renderSelectedProduct()}
         </div>
       )}
     </div>

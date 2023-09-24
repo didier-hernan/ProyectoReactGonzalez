@@ -1,7 +1,6 @@
 import React from "react";
 
 function OrderConfirmation({ purchasedData, cartItems }) {
-  // Verifica si purchasedData está definido antes de acceder a sus propiedades
   if (!purchasedData) {
     return <p>No hay datos de compra disponibles.</p>;
   }

@@ -21,7 +21,6 @@ function CheckoutSuccess() {
       <p>Teléfono: {purchasedData.phone}</p>
       <p>Email: {purchasedData.email}</p>
       <p>Número de Orden: {purchasedData.orderNumber}</p>
-      {/* Mostrar otros datos de compra si es necesario */}
     </div>
   );
 }

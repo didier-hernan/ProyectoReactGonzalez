@@ -14,7 +14,6 @@ function Cart() {
     if (cartItems.length === 0) {
       return;
     }
-
     createOrder();
   };
 
@@ -29,23 +28,19 @@ function Cart() {
   const handleDecreaseQuantity = (productId) => {
     const updatedCart = [...cartItems];
     const productInCart = updatedCart.find((item) => item.id === productId);
-
     if (productInCart) {
       if (productInCart.quantity > 1) {
         productInCart.quantity -= 1;
-        // Actualiza el carrito después de disminuir la cantidad
         removeFromCart(productId);
         addToCart(productInCart);
       } else {
-        // Si la cantidad es 1, no lo elimines
         productInCart.quantity = 1;
-        // Actualiza el carrito
         setCartItems([...cartItems]);
       }
-      // Actualizamos el carrito con el producto modificado
       setCartItems(updatedCart);
     }
   };
+
   const createOrder = async () => {
     const order = {
       buyer: {
@@ -58,11 +53,10 @@ function Cart() {
     };
 
     const orderCollection = collection(db, "orders");
-
     try {
       const docRef = await addDoc(orderCollection, order);
       console.log("Orden creada con ID:", docRef.id);
-      navigate(`/checkout/${docRef.id}/form`); // Redirige al formulario con el número de orden
+      navigate(`/checkout/${docRef.id}/form`);
     } catch (error) {
       console.error("Error al crear la orden:", error);
     }
@@ -98,13 +92,11 @@ function Cart() {
         </ul>
       )}
       <div>Total de la Compra: ${calculateTotal().toFixed(2)}</div>
-
       {showForm ? (
         <Brieft onPurchase={handlePurchase} />
       ) : (
         <button onClick={handlePurchase}>Terminar Compra</button>
       )}
-
       {cartItems.length === 0 && (
         <p style={{ color: "red" }}>
           No puedes comprar sin productos en el carrito.

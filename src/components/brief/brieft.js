@@ -5,15 +5,12 @@ function Brieft({ onPurchase }) {
   const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [completed, setCompleted] = useState(false);
-  const [formError, setFormError] = useState(""); // Estado para controlar el mensaje de error del formulario
+  const [formError, setFormError] = useState("");
 
   const handlePurchase = () => {
     if (!name || !phone || !email) {
-      // Si alguno de los campos está vacío, muestra el mensaje de error
       setFormError("Rellene todos los campos");
     } else {
-      // Realiza validación de datos aquí, por ejemplo, asegúrate de que los campos no estén vacíos
-      // Después de validar, marca la compra como completada y reinicia el mensaje de error
       setCompleted(true);
       setFormError("");
       onPurchase(name, phone, email);
@@ -44,7 +41,7 @@ function Brieft({ onPurchase }) {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
-            {/* Mostrar el mensaje de error si existe */}
+
             {formError && <p style={{ color: "red" }}>{formError}</p>}
             <button
               onClick={handlePurchase}
